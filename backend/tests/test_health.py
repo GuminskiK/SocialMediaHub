@@ -1,7 +1,7 @@
 import pytest
 import respx
 from httpx import Response
-from app.core.health import check_disk, check_db, check_rss
+from app.core.health import check_disk, check_rss
 
 
 def test_check_disk_always_returns_free_percent():
