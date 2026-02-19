@@ -25,7 +25,7 @@ async def health():
         db_ok, db_info = await check_db(settings.DATABASE_URL)
         result["checks"]["db"] = {"ok": True}
         if not db_ok:
-            result["checks"]["db"] = {"ok": False, "error": str(e)}
+            result["checks"]["db"] = {"ok": False, "error": db_info}
             result["status"] = "down"
     else:
         result["checks"]["db"] = {"ok": False, "error": "no DATABASE_URL"}
@@ -40,7 +40,7 @@ async def health():
         if not rss_info.ok:
             result["status"] = "degraded"
         if not rss_ok:
-            result["checks"]["rss_bridge"] = {"ok": False, "error": str(e)}
+            result["checks"]["rss_bridge"] = {"ok": False, "error": rss_info}
             result["status"] = "degraded"
 
     return result
