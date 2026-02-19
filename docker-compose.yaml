@@ -1,0 +1,35 @@
+services:
+  backend:
+    build: 
+      context: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/socialmediahub
+      - RSS_BRIDGE_URL=http://rss_bridge:80
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=socialmediahub
+
+  rss_bridge:
+    image: rssbridge/rss-bridge:latest
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - rssbridge_data:/data
+
+volumes:
+  postgres_data:
+  rssbridge_data:
