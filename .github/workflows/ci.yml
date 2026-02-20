@@ -51,5 +51,6 @@ jobs:
       - name: Run tests
         env:
           DATABASE_URL: postgresql://user:password@localhost:5432/socialmediahub_test
+          PYTHONPATH: backend
         run: |
           pytest -q
